@@ -9,10 +9,7 @@ import { Elysia } from "elysia";
 
 import { employeeRouter } from "@/module/employee/employee-router";
 
-import { createId } from "@paralleldrive/cuid2";
 import { client } from "./db";
-
-console.log("danko", createId());
 
 const app = new Elysia()
   .use(logger())
