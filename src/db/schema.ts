@@ -20,9 +20,9 @@ const _selectEmployee = createSelectSchema(employee);
 
 export const createEmployee = t.Omit(_createEmployee, ["id"]);
 export const selectEmployee = t.Partial(t.Omit(_selectEmployee, ["id"]));
-export const selectEmployeeById = _selectEmployee.properties.id;
+export const selectEmployeeById = t.String();
 
 export type Employee = typeof employee.$inferSelect;
 export type CreateEmployee = Static<typeof createEmployee>;
 export type SelectEmployee = Query<Static<typeof selectEmployee>>;
-export type SelectEmployeeById = typeof selectEmployeeById;
+export type SelectEmployeeById = Static<typeof selectEmployeeById>;
