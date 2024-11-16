@@ -6,20 +6,27 @@ import { serverTiming } from "@elysiajs/server-timing";
 import { staticPlugin } from "@elysiajs/static";
 import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
+
+import { employeeRouter } from "@/module/employee/employee-router";
+
+import { createId } from "@paralleldrive/cuid2";
 import { client } from "./db";
 
+console.log("danko", createId());
+
 const app = new Elysia()
-	.use(logger())
-	.use(swagger())
-	.use(bearer())
-	.use(cors())
-	.use(jwt({ secret: process.env.JWT_SECRET as string }))
-	.use(serverTiming())
-	.use(staticPlugin());
+  .use(logger())
+  .use(swagger())
+  .use(bearer())
+  .use(cors())
+  .use(jwt({ secret: process.env.JWT_SECRET as string }))
+  .use(serverTiming())
+  .use(staticPlugin())
+  .use(employeeRouter);
 
 await client.connect();
 console.log("🗄️ Database was connected!");
 
 app.listen(process.env.PORT as string, () =>
-	console.log(`🦊 Server started at ${app.server?.url.origin}`),
+  console.log(`🦊 Server started at ${app.server?.url.origin}`),
 );
