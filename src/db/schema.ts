@@ -9,7 +9,7 @@ export const employee = pgTable("employee", {
     length: 24,
   })
     .primaryKey()
-    .$defaultFn(() => createId()),
+    .$defaultFn(createId),
   name: varchar("name"),
   email: varchar("email"),
   age: integer("age"),
@@ -25,4 +25,4 @@ export const selectEmployeeById = _selectEmployee.properties.id;
 export type Employee = typeof employee.$inferSelect;
 export type CreateEmployee = Static<typeof createEmployee>;
 export type SelectEmployee = Query<Static<typeof selectEmployee>>;
-export type SelectEmployeeById = Static<typeof selectEmployeeById>;
+export type SelectEmployeeById = typeof selectEmployeeById;
