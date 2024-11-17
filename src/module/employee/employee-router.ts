@@ -13,7 +13,6 @@ export const employeeRouter = new Elysia({
   .get(
     "/",
     async (ctx) => {
-      ctx.set.status = 200;
       return employeeService.find(buildQuery(ctx.query));
     },
     {
@@ -30,5 +29,20 @@ export const employeeRouter = new Elysia({
     },
   )
   .get("/:id", async (ctx) => {
-    return employeeService.findById(ctx.params.id);
+    const employee = await employeeService.findById(ctx.params.id);
+
+    if (!employee) {
+      ctx.set.status = 404;
+    }
+
+    return employee;
+  })
+  .delete("/:id", async (ctx) => {
+    const deletedEmployee = await employeeService.delete(ctx.params.id);
+
+    if (!deletedEmployee) {
+      ctx.set.status = 404;
+    }
+
+    return deletedEmployee;
   });

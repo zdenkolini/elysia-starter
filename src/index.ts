@@ -12,7 +12,16 @@ import { employeeRouter } from "@/module/employee/employee-router";
 import { client } from "./db";
 
 const app = new Elysia()
-  .use(logger())
+  .use(
+    logger({
+      transport: {
+        target: "pino-pretty",
+        options: {
+          colorize: true,
+        },
+      },
+    }),
+  )
   .use(swagger())
   .use(bearer())
   .use(cors())

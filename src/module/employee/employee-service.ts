@@ -1,3 +1,5 @@
+import { eq } from "drizzle-orm";
+
 import { db } from "@/db";
 import {
   type CreateEmployee,
@@ -5,32 +7,17 @@ import {
   type SelectEmployeeById,
   employee,
 } from "@/db/schema";
+import { type Query, buildSQLQueryConfig } from "@/lib/query";
 
 export const employeeService = {
-  create: (payload: CreateEmployee) => {
-    db.insert(employee).values(payload).returning().execute();
-  },
-  find({ limit = 10, page = 0, filter }: SelectEmployee) {
-    return db.query.employee.findMany({
-      limit: limit,
-      offset: page * limit,
-      where: (emp, { ilike, and }) => {
-        return and(
-          ...Object.entries(filter ?? {})
-            .filter((_, value) => !!value)
-            .map(([column, value]) =>
-              ilike(
-                emp[column as keyof SelectEmployee["filter"]],
-                `%${value!}%`,
-              ),
-            ),
-        );
-      },
-    });
-  },
-  findById(id: SelectEmployeeById) {
-    return db.query.employee.findFirst({
+  create: (payload: CreateEmployee) =>
+    db.insert(employee).values(payload).returning().execute(),
+  find: (query: Query<SelectEmployee>) =>
+    db.query.employee.findMany(buildSQLQueryConfig(query)),
+  findById: (id: SelectEmployeeById) =>
+    db.query.employee.findFirst({
       where: (emp, { eq }) => eq(emp.id, id),
-    });
-  },
+    }),
+  delete: (id: SelectEmployeeById) =>
+    db.delete(employee).where(eq(employee.id, id)).returning().execute(),
 };

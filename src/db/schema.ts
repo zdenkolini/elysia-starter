@@ -24,5 +24,5 @@ export const selectEmployeeById = _selectEmployee.properties.id;
 
 export type Employee = typeof employee.$inferSelect;
 export type CreateEmployee = Static<typeof createEmployee>;
-export type SelectEmployee = Query<Static<typeof selectEmployee>>;
+export type SelectEmployee = Static<typeof selectEmployee>;
 export type SelectEmployeeById = Static<typeof selectEmployeeById>;
