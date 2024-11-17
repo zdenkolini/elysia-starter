@@ -7,7 +7,8 @@ import {
   type SelectEmployeeById,
   employee,
 } from "@/db/schema";
-import { type Query, buildSQLQueryConfig } from "@/lib/query";
+import type { Query } from "@/lib/query";
+import { buildSQLQueryConfig } from "@/lib/query/buildSQLQueryConfig";
 
 export const employeeService = {
   create: (payload: CreateEmployee) =>
