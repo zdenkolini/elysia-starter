@@ -1,11 +1,9 @@
-import {
-  createEmployee,
-  selectEmployee,
-  selectEmployeeById,
-} from "@/db/schema";
-import { buildQuery, filtersWithQuerySchema } from "@/lib/query";
-import { employeeService } from "@/module/employee/employee-service";
 import Elysia from "elysia";
+
+import { createEmployee, selectEmployee } from "@/db/schema";
+import { buildQuery } from "@/lib/query/buildQuery";
+import { filtersWithQuerySchema } from "@/lib/query/filtersWithQuerySchema";
+import { employeeService } from "@/module/employee/employee-service";
 
 export const employeeRouter = new Elysia({
   prefix: "/employee",
