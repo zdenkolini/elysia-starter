@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 import { db } from "@/db";
 import {
@@ -19,5 +19,10 @@ export const employeeService = {
       where: (emp, { eq }) => eq(emp.id, id),
     }),
   delete: (id: SelectEmployeeById) =>
-    db.delete(employee).where(eq(employee.id, id)).returning().execute(),
+    db
+      .update(employee)
+      .set({ deletedAt: sql`now()` })
+      .where(eq(employee.id, id))
+      .returning()
+      .execute(),
 };

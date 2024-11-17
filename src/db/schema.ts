@@ -1,8 +1,9 @@
-import type { Query } from "@/lib/query";
 import { createId } from "@paralleldrive/cuid2";
 import { char, integer, pgTable, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-typebox";
 import { type Static, t } from "elysia";
+
+import { timestamps } from "@/db/timestamps";
 
 export const employee = pgTable("employee", {
   id: char("id", {
@@ -13,6 +14,7 @@ export const employee = pgTable("employee", {
   name: varchar("name"),
   email: varchar("email"),
   age: integer("age"),
+  ...timestamps,
 });
 
 const _createEmployee = createInsertSchema(employee);

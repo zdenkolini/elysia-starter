@@ -38,7 +38,7 @@ export const employeeRouter = new Elysia({
     return employee;
   })
   .delete("/:id", async (ctx) => {
-    const deletedEmployee = await employeeService.delete(ctx.params.id);
+    const [deletedEmployee] = await employeeService.delete(ctx.params.id);
 
     if (!deletedEmployee) {
       ctx.set.status = 404;
