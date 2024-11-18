@@ -20,6 +20,7 @@ export const buildSQLQueryConfig = <
   const whereFilters = (fields: Fields): SQL | undefined =>
     and(
       ...Object.entries(filter ?? {}).map(([column, value]) => {
+        if (!value) return undefined;
         const typedColumn = column as keyof Fields;
         const drizzleColumn = fields[typedColumn];
 
